@@ -318,6 +318,28 @@ tr.detail td {
 .error-banner button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
 .error-banner button:disabled { opacity: 0.5; cursor: not-allowed; }
 
+/* ── Config warning (missing relay URL) ─────────────── */
+.config-warning {
+  background: rgba(224, 175, 104, 0.08);
+  border: 1px solid rgba(224, 175, 104, 0.35);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  color: var(--warn);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.config-warning strong { color: var(--warn); }
+.config-warning p { margin: 8px 0; color: var(--text); }
+.config-warning ol { margin: 8px 0 8px 20px; padding: 0; color: var(--text); }
+.config-warning li { margin: 4px 0; }
+.config-warning code {
+  background: rgba(224, 175, 104, 0.12);
+  color: var(--warn);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
 footer {
   margin-top: 18px;
   padding-top: 12px;

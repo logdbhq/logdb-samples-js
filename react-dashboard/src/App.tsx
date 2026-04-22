@@ -18,6 +18,10 @@ const INITIAL_FILTER: FilterState = {
   collection: "",
 };
 
+const RELAY_URL = import.meta.env.VITE_LOGDB_RELAY_URL;
+const RELAY_MISCONFIGURED =
+  !RELAY_URL || RELAY_URL.includes("<your-project-ref>");
+
 export function App() {
   const [filter, setFilter] = useState<FilterState>(INITIAL_FILTER);
   const [page, setPage] = useState(0);
@@ -95,6 +99,46 @@ export function App() {
         </p>
       </header>
 
+      {RELAY_MISCONFIGURED && (
+        <div className="config-warning">
+          <strong>LogDB relay URL is not configured.</strong>
+          <p>
+            This dashboard never holds the LogDB API key — it talks to a relay
+            you deploy, and the relay injects the key server-side. You don't
+            paste a key into this project; you point it at your relay.
+          </p>
+          <ol>
+            <li>
+              In <code>react-dashboard/</code>, copy{" "}
+              <code>.env.example</code> to <code>.env</code>.
+            </li>
+            <li>
+              Edit <code>.env</code> and set{" "}
+              <code>VITE_LOGDB_RELAY_URL</code> to your deployed relay's URL
+              (e.g.{" "}
+              <code>https://your-project.supabase.co/functions/v1/logdb-relay</code>
+              ).
+            </li>
+            <li>
+              Restart <code>npm run dev</code> — Vite only reads env vars at
+              startup.
+            </li>
+          </ol>
+          <p>
+            Don't have a relay yet? Deploy the{" "}
+            <a
+              href="https://github.com/logdbhq/logdb-web/tree/main/templates/supabase-edge-function"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Supabase Edge Function template
+            </a>{" "}
+            from <code>@logdbhq/web</code> (with <code>--no-verify-jwt</code>),
+            then use its URL above.
+          </p>
+        </div>
+      )}
+
       <FilterBar
         value={filter}
         onChange={updateFilter}
@@ -108,7 +152,7 @@ export function App() {
         writingTestLog={writing}
       />
 
-      {logs.error ? (
+      {logs.error && !RELAY_MISCONFIGURED ? (
         <div className="error-banner">
           <strong>Failed to load logs.</strong>{" "}
           {logs.error instanceof Error ? logs.error.message : String(logs.error)}
