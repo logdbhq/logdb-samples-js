@@ -1,0 +1,24 @@
+{
+  "name": "logdb-next-api-relay",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Next.js App Router sample: LogDB relay as an API route. Deploy to Vercel/Netlify/anywhere Next.js runs.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@logdbhq/node": "^0.1.1-alpha",
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.6.0"
+  }
+}
